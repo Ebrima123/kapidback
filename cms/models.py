@@ -32,28 +32,33 @@ class SlugMixin(models.Model):
 class SiteSettings(models.Model):
     """Singleton holding editable site-wide copy and contact details."""
 
-    company_name = models.CharField(max_length=120, default="Kapid Painting")
-    tagline = models.CharField(max_length=200, default="Professional painting & decorating")
-    hero_title = models.CharField(max_length=200, default="Fresh paint. Flawless finish.")
+    company_name = models.CharField(max_length=120, default="Kapid Painting Company")
+    tagline = models.CharField(max_length=200, default="Excellence isn't built in one coat")
+    hero_title = models.CharField(max_length=200, default="For all the latest decorations.")
     hero_subtitle = models.TextField(
-        default="Interior, exterior and commercial painting done right, on time and on budget."
+        default="Painting and decorating for homes, new builds and businesses across The Gambia, "
+        "inside and out."
     )
     hero_image = models.ImageField(upload_to="site/", blank=True)
-    about_title = models.CharField(max_length=200, default="About Kapid")
+    about_title = models.CharField(max_length=200, default="Kapid Company, the only solution")
     about_body = models.TextField(
-        default="We are a team of experienced painters who care about the details: careful prep, "
-        "clean lines and a tidy site when we leave."
+        default="Kapid Painting Company is a Gambian painting and decorating team. From fresh "
+        "interiors to the exterior finish on new multi-storey buildings, our crews bring careful "
+        "prep, clean lines and the latest decorative styles to every job.\n\n"
+        "Excellence isn't built in one coat, so we take the time to do it properly."
     )
     about_image = models.ImageField(upload_to="site/", blank=True)
     phone = models.CharField(max_length=40, blank=True)
     email = models.EmailField(blank=True)
     address = models.CharField(max_length=255, blank=True)
-    service_area = models.CharField(max_length=255, blank=True)
+    service_area = models.CharField(max_length=255, blank=True, default="The Gambia")
     opening_hours = models.CharField(max_length=255, blank=True)
-    facebook_url = models.URLField(blank=True)
+    facebook_url = models.URLField(blank=True, default="https://www.facebook.com/kaddijatou.sbah.3")
     instagram_url = models.URLField(blank=True)
-    years_experience = models.PositiveIntegerField(default=10)
-    projects_completed = models.PositiveIntegerField(default=500)
+    tiktok_url = models.URLField(blank=True, default="https://www.tiktok.com/@kapidpaints")
+    # 0 hides the stat on the homepage until real figures are entered.
+    years_experience = models.PositiveIntegerField(default=0)
+    projects_completed = models.PositiveIntegerField(default=0)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

@@ -63,10 +63,13 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 # SQLite by default; set DATABASE_URL for Postgres in production.
+# `or` (not a getenv default) so an empty DATABASE_URL= in .env still means SQLite.
 DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+    "default": dj_database_url.parse(
+        os.getenv("DATABASE_URL") or f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
         conn_max_age=600,
+        # Hosted Postgres (e.g. Neon) drops idle connections; re-check before reuse.
+        conn_health_checks=True,
     )
 }
 
