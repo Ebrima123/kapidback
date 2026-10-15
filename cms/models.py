@@ -34,18 +34,20 @@ class SiteSettings(models.Model):
 
     company_name = models.CharField(max_length=120, default="Kapid Painting Company")
     tagline = models.CharField(max_length=200, default="Excellence isn't built in one coat")
-    hero_title = models.CharField(max_length=200, default="For all the latest decorations.")
+    hero_title = models.CharField(
+        max_length=200, default="Professional painting for homes, businesses and new builds"
+    )
     hero_subtitle = models.TextField(
-        default="Painting and decorating for homes, new builds and businesses across The Gambia, "
-        "inside and out."
+        default="Interior and exterior painting and decorative finishes across The Gambia. "
+        "Tell us about your project and we'll prepare a free, itemised quote."
     )
     hero_image = models.ImageField(upload_to="site/", blank=True)
-    about_title = models.CharField(max_length=200, default="Kapid Company, the only solution")
+    about_title = models.CharField(max_length=200, default="About Kapid Painting Company")
     about_body = models.TextField(
-        default="Kapid Painting Company is a Gambian painting and decorating team. From fresh "
-        "interiors to the exterior finish on new multi-storey buildings, our crews bring careful "
-        "prep, clean lines and the latest decorative styles to every job.\n\n"
-        "Excellence isn't built in one coat, so we take the time to do it properly."
+        default="Kapid Painting Company is a painting and decorating business in The Gambia. We paint "
+        "interiors and exteriors for homeowners, businesses and new-build projects, and offer "
+        "decorative finishes for clients who want more than a plain wall.\n\n"
+        "Our motto is simple: excellence isn't built in one coat."
     )
     about_image = models.ImageField(upload_to="site/", blank=True)
     phone = models.CharField(max_length=40, blank=True)
@@ -97,6 +99,7 @@ class Project(SlugMixin, Orderable):
         INTERIOR = "interior", "Interior"
         EXTERIOR = "exterior", "Exterior"
         COMMERCIAL = "commercial", "Commercial"
+        NEW_BUILD = "new_build", "New build"
         CABINETS = "cabinets", "Cabinets"
         OTHER = "other", "Other"
 
@@ -104,6 +107,9 @@ class Project(SlugMixin, Orderable):
     category = models.CharField(max_length=20, choices=Category.choices, default=Category.INTERIOR)
     location = models.CharField(max_length=140, blank=True)
     description = models.TextField(blank=True)
+    scope_of_work = models.TextField(
+        blank=True, help_text="Work carried out on this job, one item per line"
+    )
     cover_image = models.ImageField(upload_to="projects/", blank=True)
     completed_on = models.DateField(null=True, blank=True)
     is_featured = models.BooleanField(default=False)
