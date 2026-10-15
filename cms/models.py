@@ -1,3 +1,4 @@
+from django.core.validators import RegexValidator
 from django.db import models
 from django.utils.text import slugify
 
@@ -51,6 +52,17 @@ class SiteSettings(models.Model):
     )
     about_image = models.ImageField(upload_to="site/", blank=True)
     phone = models.CharField(max_length=40, blank=True)
+    whatsapp_number = models.CharField(
+        max_length=30,
+        blank=True,
+        validators=[
+            RegexValidator(
+                r"^\+?[\d\s()-]{7,}$",
+                "Enter a phone number using digits, spaces, dashes or a leading +.",
+            )
+        ],
+        help_text="Shown as a WhatsApp chat button on the website. Leave blank to hide it.",
+    )
     email = models.EmailField(blank=True)
     address = models.CharField(max_length=255, blank=True)
     service_area = models.CharField(max_length=255, blank=True, default="The Gambia")
